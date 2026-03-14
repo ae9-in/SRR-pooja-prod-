@@ -1,6 +1,7 @@
 {
   "name": "srr-pooja-works",
   "private": true,
+  "type": "module",
   "workspaces": [
     "frontend",
     "backend"

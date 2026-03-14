@@ -6,6 +6,7 @@ import contactRoutes from './routes/contact.js'
 import productRoutes from './routes/products.js'
 import { errorHandler } from './middleware/errorHandler.js'
 import { notFound } from './middleware/notFound.js'
+import { connectDatabase } from './config/db.js'
 
 const app = express()
 
@@ -35,6 +36,15 @@ app.use(
 )
 
 app.use(express.json({ limit: '1mb' }))
+
+app.use(async (req, res, next) => {
+  try {
+    await connectDatabase()
+    next()
+  } catch (error) {
+    next(error)
+  }
+})
 
 app.get('/api/health', getHealth)
 app.use('/api/contact', contactRoutes)
