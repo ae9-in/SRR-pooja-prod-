@@ -26,7 +26,11 @@ export default function Contact() {
       await api.post('/contact', form)
       setSubmitted(true)
     } catch (requestError) {
-      setError(requestError.response?.data?.error || 'Failed to submit inquiry. Check backend server and try again.')
+      let emsg = requestError.response?.data?.error
+      if (typeof emsg === 'object' && emsg !== null) {
+        emsg = emsg.message || JSON.stringify(emsg)
+      }
+      setError(emsg || 'Failed to submit inquiry. Check backend server and try again.')
     } finally {
       setLoading(false)
     }
