@@ -1,34 +1,56 @@
+# Dependencies
 node_modules/
-build/
-dist/
-.vite/
-.cache/
+/.pnp
+.pnp.js
+
+# Testing
 coverage/
 
+# Production
+build/
+dist/
+.vercel/
+
+# Misc
+.DS_Store
 .env
 .env.local
-.env.*
-.env.*.local
-!.env.example
-!.env.*.example
-
-frontend/node_modules/
-frontend/.vite/
-frontend/dist/
-
-backend/node_modules/
-backend/build/
+.env.development.local
+.env.test.local
+.env.production.local
 backend/.env
+frontend/.env
 
-*.log
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-.DS_Store
-Thumbs.db
-.idea/
+# Editor
 .vscode/
-.vercel/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
+# Vite artifacts
+.vite/
+.cache/
+
+# Local Netlify folder
+.netlify
+
+# OS files
+Thumbs.db
+desktop.ini
+
+# Subdirectory ignores
+**/node_modules/
+**/dist/
+**/build/
+**/.env
+**/.env.local
+**/.env.*
