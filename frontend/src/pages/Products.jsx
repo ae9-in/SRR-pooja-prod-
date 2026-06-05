@@ -16,7 +16,7 @@ function ProductCard({ product, index }) {
           <img
             src={product.image}
             alt={product.name}
-            className="h-full w-full object-cover object-center group-hover:scale-[1.02] transition-transform duration-500"
+            className="h-full w-full object-contain px-4 py-0 group-hover:scale-[1.05] transition-transform duration-500"
             onError={() => setImageFailed(true)}
           />
         ) : (

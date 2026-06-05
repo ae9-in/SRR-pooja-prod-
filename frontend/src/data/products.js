@@ -9,7 +9,7 @@ export const products = [
     image: '/images/products/sandalwood-agarbatti.png',
     emoji: '🌿',
     tag: 'Bestseller',
-    bg: '#f6ead7',
+    bg: '#b6a191',
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ export const products = [
     image: '/images/products/rose-agarbatti.png',
     emoji: '🌹',
     tag: 'Popular',
-    bg: '#fde2ea',
+    bg: '#e8c6d3',
   },
   {
     id: 3,
@@ -33,7 +33,7 @@ export const products = [
     image: '/images/products/lavender-agarbatti.png',
     emoji: '🪻',
     tag: 'Calming',
-    bg: '#efe5ff',
+    bg: '#eac6d2',
   },
   {
     id: 4,
@@ -45,7 +45,7 @@ export const products = [
     image: '/images/products/3-in-1-assorted-agarbatti-pack.png',
     emoji: '✨',
     tag: 'Assorted',
-    bg: '#fff1cc',
+    bg: '#d6b9b3',
   },
   {
     id: 5,
@@ -57,7 +57,7 @@ export const products = [
     image: '/images/products/pure-camphor.png',
     emoji: '⬜',
     tag: 'Pure',
-    bg: '#f5f5f4',
+    bg: '#d7b1c7',
   },
   {
     id: 6,
@@ -69,7 +69,7 @@ export const products = [
     image: '/images/products/pooja-oil.png',
     emoji: '🪔',
     tag: 'Traditional',
-    bg: '#ffe8bf',
+    bg: '#d4aec7',
   },
   {
     id: 7,
@@ -81,7 +81,7 @@ export const products = [
     image: '/images/products/cotton-wicks.png',
     emoji: '🕯️',
     tag: 'Daily Use',
-    bg: '#f8f4eb',
+    bg: '#caacc4',
   },
   {
     id: 8,
@@ -93,7 +93,7 @@ export const products = [
     image: '/images/products/sandalwood-dhoop-sticks.png',
     emoji: '🌾',
     tag: 'Aromatic',
-    bg: '#eee3cb',
+    bg: '#d9b4d0',
   },
   {
     id: 9,
@@ -105,7 +105,7 @@ export const products = [
     image: '/images/products/kumkum.png',
     emoji: '🔴',
     tag: 'Sacred',
-    bg: '#fee2e2',
+    bg: '#c7a0c3',
   },
   {
     id: 10,
@@ -117,7 +117,7 @@ export const products = [
     image: '/images/products/turmeric.png',
     emoji: '🟡',
     tag: 'Traditional',
-    bg: '#fff3b0',
+    bg: '#d9abd7',
   },
 ]
 

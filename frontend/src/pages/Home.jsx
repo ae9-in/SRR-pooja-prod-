@@ -147,7 +147,7 @@ function CarouselSection() {
                       <img
                         src={product.image}
                         alt={product.name}
-                        className="h-full w-full object-cover object-center"
+                        className="h-full w-full object-contain px-3 py-0 transition-transform duration-500"
                         onError={() => markImageFailed(product.id)}
                       />
                     ) : (
