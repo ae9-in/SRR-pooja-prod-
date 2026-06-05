@@ -45,9 +45,11 @@ export default function Navbar() {
 
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-golden-400 to-golden-700 flex items-center justify-center shadow-lg">
-              <span className="text-cream-100 font-cinzel font-bold text-sm">ॐ</span>
-            </div>
+            <img 
+              src="/srr-logo.png" 
+              alt="SRR Logo" 
+              className="w-10 h-10 rounded-full object-cover shadow-lg border border-golden-500/30" 
+            />
             <div>
               <div className="font-cinzel font-bold text-golden-700 text-base leading-tight tracking-wide">SRR</div>
               <div className="font-cormorant text-golden-500 text-xs tracking-widest uppercase">Pooja Works</div>

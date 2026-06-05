@@ -38,9 +38,11 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           <div>
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-golden-300 to-golden-400 flex items-center justify-center">
-                <span className="text-golden-900 font-cinzel font-bold text-xl">ॐ</span>
-              </div>
+              <img 
+                src="/srr-logo.png" 
+                alt="SRR Logo" 
+                className="w-12 h-12 rounded-full object-cover shadow-lg border border-golden-500/30" 
+              />
               <div>
                 <div className="font-cinzel font-bold text-golden-300 text-lg">SRR</div>
                 <div className="font-cormorant text-golden-400 text-sm tracking-widest uppercase">Pooja Works</div>
