@@ -47,8 +47,8 @@ const latestPriceByName = {
   'Rose Agarbatti': 'Rs. 59',
   'Lavender Agarbatti': 'Rs. 59',
   '3-in-1 Assorted Agarbatti Pack': 'Rs. 59',
-  'Pure Camphor': 'Rs. 219',
-  'Pooja Oil': 'Rs. 209',
+  'Pure Camphor 100g box': 'Rs. 220',
+  'Pooja Oil 1L': 'Rs. 210',
   'Cotton Wicks': 'Rs. 10',
   'Sandalwood Dhoop Sticks': 'Rs. 59',
 }

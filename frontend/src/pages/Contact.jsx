@@ -152,7 +152,7 @@ export default function Contact() {
                   <label className="block font-cormorant text-golden-700 text-sm mb-1.5 tracking-wide">Products Interested In *</label>
                   <select name="productInterest" value={form.productInterest} onChange={handle} required className="w-full px-4 py-3 glass rounded-xl border border-golden-300/40 font-cormorant text-golden-800 text-base transition-all bg-transparent">
                     <option value="">Select product</option>
-                    {['Sandalwood Agarbatti', 'Rose Agarbatti', 'Lavender Agarbatti', '3-in-1 Assorted Agarbatti Pack', 'Pure Camphor', 'Pooja Oil', 'Cotton Wicks', 'Sandalwood Dhoop Sticks', 'Kumkum', 'Turmeric'].map((option) => <option key={option}>{option}</option>)}
+                    {['Sandalwood Agarbatti', 'Rose Agarbatti', 'Lavender Agarbatti', '3-in-1 Assorted Agarbatti Pack', 'Pure Camphor 100g box', 'Pooja Oil 1L', 'Cotton Wicks', 'Sandalwood Dhoop Sticks', 'Kumkum', 'Turmeric'].map((option) => <option key={option}>{option}</option>)}
                   </select>
                 </div>
               </div>
