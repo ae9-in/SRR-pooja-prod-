@@ -4,6 +4,7 @@ import env from './config/env.js'
 import { getHealth } from './controllers/healthController.js'
 import contactRoutes from './routes/contact.js'
 import productRoutes from './routes/products.js'
+import adminRoutes from './routes/admin.js'
 import { errorHandler } from './middleware/errorHandler.js'
 import { notFound } from './middleware/notFound.js'
 import { connectDatabase } from './config/db.js'
@@ -49,6 +50,7 @@ app.use(async (req, res, next) => {
 app.get('/api/health', getHealth)
 app.use('/api/contact', contactRoutes)
 app.use('/api/products', productRoutes)
+app.use('/api/admin', adminRoutes)
 
 app.use(notFound)
 app.use(errorHandler)

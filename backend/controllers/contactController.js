@@ -4,6 +4,7 @@ import {
   createContact as createRuntimeContact,
   getContacts as getRuntimeContacts,
   updateContactStatus as updateRuntimeContactStatus,
+  deleteContact as deleteRuntimeContact,
 } from '../data/runtimeStore.js'
 
 const allowedStatuses = new Set(['new', 'contacted', 'converted', 'closed'])
@@ -69,6 +70,26 @@ export async function updateContactStatus(req, res, next) {
     }
 
     return res.json({ success: true, data: inquiry, source: dbState.connected ? 'mongo' : 'memory' })
+  } catch (error) {
+    return next(error)
+  }
+}
+
+export async function removeContact(req, res, next) {
+  try {
+    const inquiry = dbState.connected
+      ? await Contact.findByIdAndDelete(req.params.id)
+      : deleteRuntimeContact(req.params.id)
+
+    if (!inquiry) {
+      return res.status(404).json({ success: false, error: 'Inquiry not found.' })
+    }
+
+    return res.json({
+      success: true,
+      message: 'Inquiry deleted.',
+      source: dbState.connected ? 'mongo' : 'memory',
+    })
   } catch (error) {
     return next(error)
   }

@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { ChevronLeft, ChevronRight, Star, Award, Truck, ShieldCheck, Users, ArrowRight, AlertCircle } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Star, Award, Truck, ShieldCheck, Users, ArrowRight, AlertCircle, Send, CheckCircle, MessageCircle } from 'lucide-react'
 import { useProducts } from '../hooks/useProducts'
+import api from '../lib/api'
+import QuickQueryModal from '../components/QuickQueryModal'
 
 function useReveal() {
   const ref = useRef(null)
@@ -350,19 +352,146 @@ function TestimonialsSection() {
 
 function CTASection() {
   const [ref, vis] = useReveal()
+  const [showQueryForm, setShowQueryForm] = useState(false)
+  const [queryModalOpen, setQueryModalOpen] = useState(false)
+  const [form, setForm] = useState({
+    name: '',
+    shopName: '',
+    phone: '',
+    city: '',
+    productInterest: 'General Wholesale Inquiry',
+    quantity: '',
+    message: '',
+  })
+  const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+
+  const handle = (e) => setForm({ ...form, [e.target.name]: e.target.value })
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setLoading(true)
+    setError('')
+    try {
+      await api.post('/contact', form)
+      setSubmitted(true)
+    } catch (err) {
+      let emsg = err.response?.data?.error
+      if (typeof emsg === 'object' && emsg !== null) {
+        emsg = emsg.message || JSON.stringify(emsg)
+      }
+      setError(emsg || 'Failed to send query. Please try again or WhatsApp us.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
-    <section ref={ref} className="py-20 relative overflow-hidden text-center" style={{ background: 'linear-gradient(135deg,#9e6b35,#c9965a,#ddb87a)' }}>
-      <div className="absolute font-cinzel text-golden-900/5 pointer-events-none select-none" style={{ fontSize: '28vw', top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }}>ॐ</div>
-      <div className="relative max-w-4xl mx-auto px-4" style={{ opacity: vis ? 1 : 0, transform: vis ? 'none' : 'translateY(30px)', transition: 'all .8s' }}>
-        <div className="divider mb-6"><span className="text-cream-200/60">ॐ</span></div>
-        <h2 className="font-cinzel text-3xl sm:text-4xl md:text-5xl font-bold text-cream-100 mb-5">Ready to Stock Your Store?</h2>
-        <p className="font-cormorant text-cream-200 text-xl sm:text-2xl mb-10 max-w-2xl mx-auto">Join retailers who trust SRR Pooja Works for wholesale supply.</p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link to="/contact" className="btn-shine w-full sm:w-auto px-10 py-4 bg-cream-100 text-golden-800 font-cinzel tracking-wider rounded-full shadow-2xl hover:bg-white transition-all text-center">Contact Us Now</Link>
-          <Link to="/products" className="w-full sm:w-auto px-10 py-4 border-2 border-cream-200/60 text-cream-100 font-cinzel tracking-wider rounded-full hover:bg-cream-100/10 transition-all text-center">Browse Products</Link>
+    <>
+      <section ref={ref} className="py-20 relative overflow-hidden text-center" style={{ background: 'linear-gradient(135deg,#9e6b35,#c9965a,#ddb87a)' }}>
+        <div className="absolute font-cinzel text-golden-900/5 pointer-events-none select-none" style={{ fontSize: '28vw', top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }}>ॐ</div>
+        <div className="relative max-w-4xl mx-auto px-4" style={{ opacity: vis ? 1 : 0, transform: vis ? 'none' : 'translateY(30px)', transition: 'all .8s' }}>
+          <div className="divider mb-6"><span className="text-cream-200/60">ॐ</span></div>
+          <h2 className="font-cinzel text-3xl sm:text-4xl md:text-5xl font-bold text-cream-100 mb-5">Ready to Stock Your Store?</h2>
+          <p className="font-cormorant text-cream-200 text-xl sm:text-2xl mb-10 max-w-2xl mx-auto">Join retailers who trust SRR Pooja Works for wholesale supply.</p>
+          
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <button
+              onClick={() => setShowQueryForm(!showQueryForm)}
+              className="btn-shine w-full sm:w-auto px-10 py-4 bg-golden-900 text-cream-100 font-cinzel tracking-wider rounded-full shadow-2xl hover:bg-golden-800 transition-all text-center flex items-center justify-center gap-2 cursor-pointer border-none"
+            >
+              <Send size={18} /> {showQueryForm ? 'Hide Query Form' : 'Send Quick Query'}
+            </button>
+            <Link to="/contact" className="btn-shine w-full sm:w-auto px-10 py-4 bg-cream-100 text-golden-800 font-cinzel tracking-wider rounded-full shadow-2xl hover:bg-white transition-all text-center">
+              Contact Us Now
+            </Link>
+            <Link to="/products" className="w-full sm:w-auto px-10 py-4 border-2 border-cream-200/60 text-cream-100 font-cinzel tracking-wider rounded-full hover:bg-cream-100/10 transition-all text-center">
+              Browse Products
+            </Link>
+          </div>
+
+          {/* Inline Quick Query Form */}
+          {showQueryForm && (
+            <div className="mt-10 max-w-2xl mx-auto text-left glass rounded-3xl p-6 sm:p-8 border border-cream-200/40 shadow-2xl" style={{ background: 'rgba(253, 248, 238, 0.96)' }}>
+              <div className="text-center mb-6">
+                <h3 className="font-cinzel text-2xl font-bold text-golden-900">Send Quick Wholesale Query</h3>
+                <p className="font-cormorant text-golden-700 text-base">We will contact you with wholesale pricing and catalog details.</p>
+              </div>
+
+              {submitted ? (
+                <div className="text-center py-6">
+                  <CheckCircle size={52} className="text-green-600 mx-auto mb-3" />
+                  <h4 className="font-cinzel text-golden-900 text-xl font-bold mb-2">Query Received!</h4>
+                  <p className="font-cormorant text-golden-700 text-lg mb-4">Our team will get in touch with you shortly.</p>
+                  <button
+                    onClick={() => { setSubmitted(false); setForm({ name: '', shopName: '', phone: '', city: '', productInterest: 'General Wholesale Inquiry', quantity: '', message: '' }) }}
+                    className="btn-shine px-6 py-2 bg-golden-600 text-cream-100 font-cinzel text-sm rounded-full cursor-pointer border-none"
+                  >
+                    Send Another Query
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  {error && (
+                    <div className="p-3 rounded-xl border border-red-300 bg-red-50 text-red-800 text-sm font-cormorant flex items-center gap-2">
+                      <AlertCircle size={16} /> <span>{error}</span>
+                    </div>
+                  )}
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block font-cormorant text-golden-800 text-sm font-semibold mb-1">Your Name *</label>
+                      <input type="text" name="name" value={form.name} onChange={handle} placeholder="Full name" required className="w-full px-3.5 py-2.5 glass rounded-xl border border-golden-300/60 font-cormorant text-golden-900 text-base placeholder:text-golden-400 focus:outline-none focus:border-golden-600" />
+                    </div>
+                    <div>
+                      <label className="block font-cormorant text-golden-800 text-sm font-semibold mb-1">Shop / Business Name *</label>
+                      <input type="text" name="shopName" value={form.shopName} onChange={handle} placeholder="Shop name" required className="w-full px-3.5 py-2.5 glass rounded-xl border border-golden-300/60 font-cormorant text-golden-900 text-base placeholder:text-golden-400 focus:outline-none focus:border-golden-600" />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block font-cormorant text-golden-800 text-sm font-semibold mb-1">Phone / WhatsApp *</label>
+                      <input type="tel" name="phone" value={form.phone} onChange={handle} placeholder="+91 84311 19696" required className="w-full px-3.5 py-2.5 glass rounded-xl border border-golden-300/60 font-cormorant text-golden-900 text-base placeholder:text-golden-400 focus:outline-none focus:border-golden-600" />
+                    </div>
+                    <div>
+                      <label className="block font-cormorant text-golden-800 text-sm font-semibold mb-1">City & State *</label>
+                      <input type="text" name="city" value={form.city} onChange={handle} placeholder="e.g. Bengaluru, KA" required className="w-full px-3.5 py-2.5 glass rounded-xl border border-golden-300/60 font-cormorant text-golden-900 text-base placeholder:text-golden-400 focus:outline-none focus:border-golden-600" />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block font-cormorant text-golden-800 text-sm font-semibold mb-1">Product Interest *</label>
+                      <select name="productInterest" value={form.productInterest} onChange={handle} required className="w-full px-3.5 py-2.5 glass rounded-xl border border-golden-300/60 font-cormorant text-golden-900 text-base focus:outline-none focus:border-golden-600 bg-transparent">
+                        {['General Wholesale Inquiry', 'Sandalwood Agarbatti', 'Rose Agarbatti', 'Lavender Agarbatti', '3-in-1 Assorted Agarbatti Pack', 'Pure Camphor 100g box', 'Pooja Oil 1L', 'Cotton Wicks', 'Sandalwood Dhoop Sticks', 'Kumkum', 'Turmeric'].map(opt => (
+                          <option key={opt} value={opt}>{opt}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block font-cormorant text-golden-800 text-sm font-semibold mb-1">Approx Quantity</label>
+                      <input type="text" name="quantity" value={form.quantity} onChange={handle} placeholder="e.g. 50 packs" className="w-full px-3.5 py-2.5 glass rounded-xl border border-golden-300/60 font-cormorant text-golden-900 text-base placeholder:text-golden-400 focus:outline-none focus:border-golden-600" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block font-cormorant text-golden-800 text-sm font-semibold mb-1">Message / Note</label>
+                    <textarea name="message" value={form.message} onChange={handle} rows={3} placeholder="Any specific requirements..." className="w-full px-3.5 py-2.5 glass rounded-xl border border-golden-300/60 font-cormorant text-golden-900 text-base placeholder:text-golden-400 focus:outline-none focus:border-golden-600 resize-none" />
+                  </div>
+
+                  <button type="submit" disabled={loading} className="btn-shine w-full py-3.5 bg-gradient-to-r from-golden-700 to-golden-900 text-cream-100 font-cinzel tracking-widest text-sm rounded-xl shadow-lg hover:shadow-golden-700/40 transition-all flex items-center justify-center gap-2 cursor-pointer border-none disabled:opacity-60">
+                    {loading ? <div className="w-5 h-5 border-2 border-cream-100/30 border-t-cream-100 rounded-full animate-spin" /> : <><Send size={16} /> Submit Query Now</>}
+                  </button>
+                </form>
+              )}
+            </div>
+          )}
         </div>
-      </div>
-    </section>
+      </section>
+      <QuickQueryModal isOpen={queryModalOpen} onClose={() => setQueryModalOpen(false)} />
+    </>
   )
 }
 
@@ -378,3 +507,4 @@ export default function Home() {
     </main>
   )
 }
+

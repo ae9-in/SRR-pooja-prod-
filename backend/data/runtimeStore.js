@@ -77,3 +77,11 @@ export const updateContactStatus = (id, status) => {
 
   return runtimeStore.contacts[index]
 }
+
+export const deleteContact = (id) => {
+  const index = runtimeStore.contacts.findIndex((contact) => contact._id === id)
+  if (index === -1) return null
+
+  const [deleted] = runtimeStore.contacts.splice(index, 1)
+  return deleted
+}
