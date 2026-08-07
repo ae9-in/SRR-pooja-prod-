@@ -137,6 +137,7 @@ export default function AdminQueries() {
         <table className="admin-table">
           <thead>
             <tr>
+              <th style={{ width: '80px', textAlign: 'center' }}>Delete</th>
               <th>Name</th>
               <th>Shop Name</th>
               <th>Phone</th>
@@ -147,7 +148,6 @@ export default function AdminQueries() {
               <th>Message</th>
               <th>Status</th>
               <th>Date</th>
-              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -158,6 +158,16 @@ export default function AdminQueries() {
             ) : (
               filtered.map((q) => (
                 <tr key={q._id}>
+                  <td style={{ textAlign: 'center' }}>
+                    <button
+                      className="admin-delete-btn"
+                      onClick={() => setDeleteTarget(q)}
+                      title="Delete Inquiry"
+                      style={{ margin: '0 auto' }}
+                    >
+                      🗑️
+                    </button>
+                  </td>
                   <td className="admin-cell-bold">{q.name}</td>
                   <td>{q.shopName}</td>
                   <td>
@@ -196,15 +206,6 @@ export default function AdminQueries() {
                       day: '2-digit', month: 'short', year: 'numeric'
                     })}
                   </td>
-                  <td>
-                    <button
-                      className="admin-delete-btn"
-                      onClick={() => setDeleteTarget(q)}
-                      title="Delete Inquiry"
-                    >
-                      🗑️
-                    </button>
-                  </td>
                 </tr>
               ))
             )}
@@ -222,7 +223,7 @@ export default function AdminQueries() {
             </div>
             <div className="admin-modal-body">
               <p className="admin-confirm-text">
-                Are you sure you want to delete inquiry from <strong>{deleteTarget.name}</strong> ({deleteTarget.shopName})?
+                Are you sure you want to delete the inquiry from <strong>{deleteTarget.name}</strong> ({deleteTarget.shopName})?
               </p>
               <div className="admin-modal-footer">
                 <button className="admin-cancel-btn" onClick={() => setDeleteTarget(null)}>
